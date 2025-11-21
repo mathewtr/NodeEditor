@@ -1,0 +1,176 @@
+{
+    "version": "1.0",
+    "description": "Node type definitions for FloatVR visual editor",
+    "nodeTypes": [
+      {
+        "id": "value",
+        "title": "value",
+        "type": "parameter",
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "float"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "value",
+            "type": "float",
+            "default": 4
+          }
+        ]
+      },
+      {
+        "id": "complexity",
+        "title": "complexity",
+        "type": "connector",
+        "appParameter": "complexity",
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "float"
+          }
+        ],
+        "parameters": []
+      },
+      {
+        "id": "bg_selector",
+        "title": "BG selector",
+        "type": "connector",
+        "appParameter": "bgIndex",
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "int"
+          }
+        ],
+        "parameters": []
+      },
+      {
+        "id": "mandala_object",
+        "title": "mandala object",
+        "type": "object",
+        "inputs": [
+          {
+            "id": "speed",
+            "type": "float"
+          },
+          {
+            "id": "complexity",
+            "type": "int"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "object"
+          }
+        ],
+        "parameters": []
+      },
+      {
+        "id": "background_texture",
+        "title": "background texture",
+        "type": "object",
+        "inputs": [
+          {
+            "id": "complexity",
+            "type": "float"
+          },
+          {
+            "id": "index",
+            "type": "int"
+          },
+          {
+            "id": "color",
+            "type": "vector4"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "object"
+          }
+        ],
+        "parameters": []
+      },
+      {
+        "id": "combine",
+        "title": "combine",
+        "type": "utility",
+        "inputs": [
+          {
+            "id": "r",
+            "type": "float"
+          },
+          {
+            "id": "g",
+            "type": "float"
+          },
+          {
+            "id": "b",
+            "type": "float"
+          },
+          {
+            "id": "a",
+            "type": "float"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "vector4"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "r",
+            "type": "float",
+            "default": 1
+          },
+          {
+            "name": "g",
+            "type": "float",
+            "default": 1
+          },
+          {
+            "name": "b",
+            "type": "float",
+            "default": 1
+          },
+          {
+            "name": "a",
+            "type": "float",
+            "default": 1
+          }
+        ]
+      },
+      {
+        "id": "sine_wave",
+        "title": "Sine Wave",
+        "type": "generator",
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "float"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "frequency",
+            "type": "float",
+            "default": 4
+          },
+          {
+            "name": "amount",
+            "type": "float",
+            "default": 2
+          }
+        ]
+      }
+    ]
+  }
