@@ -13,6 +13,11 @@ import 'reactflow/dist/style.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
+import { ValueNode } from './components/nodes/ValueNode';
+
+const nodeTypes = {
+  valueNode: ValueNode,
+};
 
 function App() {
   const { definitions, loading, error } = useNodeDefinitions();
@@ -42,9 +47,16 @@ function App() {
       data.appParameter = definition.appParameter;
     }
 
+    const nodeTypeMap: Record<string, string> = {
+       "value": "valueNode",
+    };
+
+    const nodeComponentType = nodeTypeMap[definition.id]
+
+    
     const newNode: Node = {
       id: `node-${Date.now()}`,
-      type: 'default',
+      type: nodeComponentType,
       position: { 
         x: Math.random() * 400 + 100, 
         y: Math.random() * 400 + 100 
@@ -74,6 +86,7 @@ function App() {
       <div style={{ flex: 1 }}>
         <ReactFlow
           nodes={nodes}
+          nodeTypes={nodeTypes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
