@@ -24,15 +24,23 @@ function App() {
     [setEdges]
   );
 
+	// const testMap: Map<string, string> = new Map();
+	// testMap.set("wassup", "dawg");
+	// console.log(testMap.get("wassup"))
+
+	// let nodeMap: Map<string, any> = new Map();
+
   const handleAddNode = useCallback((nodeTypeId: string) => {
     if (!definitions) return;
 
     const definition = getNodeDefinition(definitions, nodeTypeId);
+		if (definition) console.log(definition)
     if (!definition) return;
 
     const data: Record<string, unknown> = {
       label: definition.title,
     };
+		
     
     definition.parameters.forEach(param => {
       data[param.name] = param.default;
