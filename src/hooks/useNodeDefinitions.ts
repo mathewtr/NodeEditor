@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { NodeDefinitionsFile, NodeDefinition } from '../types/nodeDefinitions.ts';
+import type { NodeDefinitionsFile, NodeDefinition } from '../types/nodeDefinitions';
 
 export function useNodeDefinitions() {
   // STATE: Store the loaded definitions
@@ -11,7 +11,7 @@ export function useNodeDefinitions() {
   // STATE: Store any error that occurs
   const [error, setError] = useState<string | null>(null);
 
-  // EFFECT: Run this code when component mounts
+  // EFFECT: Run this code when component appears on screen
   useEffect(() => {
     async function loadDefinitions() {
       try {
@@ -40,7 +40,7 @@ export function useNodeDefinitions() {
     }
 
     loadDefinitions();
-  }, []); // Empty array = run once when component mounts
+  }, []); // Empty array = run once when component appears on screen
 
   // Return the data for components to use
   return { definitions, loading, error };
@@ -50,6 +50,6 @@ export function useNodeDefinitions() {
 export function getNodeDefinition(
   definitions: NodeDefinitionsFile | null,
   nodeId: string
-): NodeDefinition | undefined {
+  ): NodeDefinition | undefined {
   return definitions?.nodeTypes.find(node => node.id === nodeId);
 }
