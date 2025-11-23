@@ -10,6 +10,7 @@ import ReactFlow,  {
   Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import './App.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
@@ -76,25 +77,36 @@ function App() {
   }
 
   return (
-    <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+    <div className="app-root">
+      {/* Left sidebar: node catalog */}
+      <div className="editor-sidebar">
+        <div className="editor-sidebar-title">Node Catalog</div>
+        <NodeCatalog definitions={definitions} onAddNode={handleAddNode} />
+      </div>
 
-      <NodeCatalog
-        definitions={definitions}
-        onAddNode={handleAddNode}
-      />
+      {/* Center: React Flow canvas */}
+      <div className="editor-canvas">
+        <div className="editor-canvas-inner">
+          <ReactFlow
+            nodes={nodes}
+            nodeTypes={nodeTypes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+          >
+            <Controls position="top-right" />
+            <Background />
+          </ReactFlow>
+        </div>
+      </div>
 
-      <div style={{ flex: 1 }}>
-        <ReactFlow
-          nodes={nodes}
-          nodeTypes={nodeTypes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-        >
-          <Controls position="top-right" />
-          <Background />
-        </ReactFlow>
+      {/* Right: inspector placeholder */}
+      <div className="editor-inspector">
+        <div className="editor-sidebar-title">Inspector</div>
+        <p className="inspector-placeholder">
+          Select a node to view and edit its parameters here.
+        </p>
       </div>
     </div>
   );
