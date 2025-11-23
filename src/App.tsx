@@ -15,9 +15,14 @@ import './App.css';
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
 import { ValueNode } from './components/nodes/ValueNode';
+import { ConnectorNode } from './components/nodes/ConnectorNode';
+import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
 
 const nodeTypes = {
-  valueNode: ValueNode,
+  value: ValueNode,
+  complexity: ConnectorNode,
+  bg_selector: ConnectorNode,
+  mandala_object: MandalaObjectNode
 };
 
 function App() {
@@ -47,17 +52,10 @@ function App() {
     if (definition.type === 'connector' && definition.appParameter) {
       data.appParameter = definition.appParameter;
     }
-
-    const nodeTypeMap: Record<string, string> = {
-       "value": "valueNode",
-    };
-
-    const nodeComponentType = nodeTypeMap[definition.id]
-
     
     const newNode: Node = {
       id: `node-${Date.now()}`,
-      type: nodeComponentType,
+      type: nodeTypeId,
       position: { 
         x: Math.random() * 400 + 100, 
         y: Math.random() * 400 + 100 
