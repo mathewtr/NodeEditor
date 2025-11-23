@@ -13,10 +13,10 @@ import 'reactflow/dist/style.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
-// import { ValueNode } from './components/nodes/ValueNode';
+import { ValueNode } from './components/nodes/ValueNode';
 
 const nodeTypes = {
-  // valueNode: ValueNode,
+  valueNode: ValueNode,
 };
 
 function App() {
