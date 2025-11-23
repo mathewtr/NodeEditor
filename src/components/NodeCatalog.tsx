@@ -1,6 +1,8 @@
 
 import type { NodeDefinitionsFile, NodeDefinition } from '../types/nodeDefinitions';
 
+import { ExportGraphButton } from './NodeExport';
+
 interface NodeCatalogProps {
   definitions: NodeDefinitionsFile;
   onAddNode: (nodeType: string) => void;
@@ -19,6 +21,7 @@ export function NodeCatalog({ definitions, onAddNode }: NodeCatalogProps) {
           onAdd={() => onAddNode(node.id)}
         />
       ))}
+	  <ExportGraphButton />
     </div>
   );
 }
