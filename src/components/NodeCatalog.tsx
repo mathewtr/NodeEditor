@@ -1,6 +1,4 @@
-
 import type { NodeDefinitionsFile, NodeDefinition } from '../types/nodeDefinitions';
-
 import { ExportGraphButton } from './NodeExport';
 
 interface NodeCatalogProps {

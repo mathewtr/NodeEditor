@@ -1,3 +1,5 @@
+// import { useReactFlow } from 'reactflow';
+
 // The DOM object that, when clicked, triggers the download
 export function ExportGraphButton() {
 	return (
@@ -7,12 +9,18 @@ export function ExportGraphButton() {
 	)
 }
 
+
 // Functionality to take the node graph, put it in a file, and download it
 function ExportGraph(): void {
-	console.log("HI!!!!!!!!!!")
-	const link = document.createElement("a")
-	link.href = "NodeExport.txt"
-	link.download = "NodeExport.txt"
+	// const reactFlowInstance = useReactFlow();
+
+	// const flowData = reactFlowInstance.getNodes();
+	// const jsonString = JSON.stringify(flowData, null, 2);
+	// console.log(jsonString);
+	
+	const link: HTMLAnchorElement = document.createElement("a");
+	link.href = "NodeExport.txt";
+	link.download = "NodeExport.txt";
 	document.body.appendChild(link);
 	link.click();
 	document.body.removeChild(link);

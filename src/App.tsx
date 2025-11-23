@@ -13,6 +13,11 @@ import 'reactflow/dist/style.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
+// import { ValueNode } from './components/nodes/ValueNode';
+
+const nodeTypes = {
+  // valueNode: ValueNode,
+};
 
 function App() {
   const { definitions, loading, error } = useNodeDefinitions();
@@ -24,23 +29,15 @@ function App() {
     [setEdges]
   );
 
-	// const testMap: Map<string, string> = new Map();
-	// testMap.set("wassup", "dawg");
-	// console.log(testMap.get("wassup"))
-
-	// let nodeMap: Map<string, any> = new Map();
-
   const handleAddNode = useCallback((nodeTypeId: string) => {
     if (!definitions) return;
 
     const definition = getNodeDefinition(definitions, nodeTypeId);
-		if (definition) console.log(definition)
     if (!definition) return;
 
     const data: Record<string, unknown> = {
       label: definition.title,
     };
-		
     
     definition.parameters.forEach(param => {
       data[param.name] = param.default;
@@ -50,9 +47,16 @@ function App() {
       data.appParameter = definition.appParameter;
     }
 
+    const nodeTypeMap: Record<string, string> = {
+       "value": "valueNode",
+    };
+
+    const nodeComponentType = nodeTypeMap[definition.id]
+
+    
     const newNode: Node = {
       id: `node-${Date.now()}`,
-      type: 'default',
+      type: nodeComponentType,
       position: { 
         x: Math.random() * 400 + 100, 
         y: Math.random() * 400 + 100 
@@ -73,6 +77,7 @@ function App() {
 
   return (
     <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+
       <NodeCatalog
         definitions={definitions}
         onAddNode={handleAddNode}
@@ -81,12 +86,13 @@ function App() {
       <div style={{ flex: 1 }}>
         <ReactFlow
           nodes={nodes}
+          nodeTypes={nodeTypes}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
         >
-          <Controls />
+          <Controls position="top-right" />
           <Background />
         </ReactFlow>
       </div>
