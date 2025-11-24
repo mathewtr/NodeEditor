@@ -8,6 +8,7 @@ import ReactFlow,  {
   useEdgesState,
   Controls,
   Background,
+	useReactFlow
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './App.css';
@@ -15,6 +16,7 @@ import './App.css';
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
 import { ValueNode } from './components/nodes/ValueNode';
+import ExportGraphButton from './components/NodeExport';
 import { ConnectorNode } from './components/nodes/ConnectorNode';
 import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
 
@@ -29,6 +31,7 @@ function App() {
   const { definitions, loading, error } = useNodeDefinitions();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+	const reactFlowInstance = useReactFlow();
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -99,13 +102,19 @@ function App() {
         </div>
       </div>
 
-      {/* Right: inspector placeholder */}
-      <div className="editor-inspector">
-        <div className="editor-sidebar-title">Inspector</div>
-        <p className="inspector-placeholder">
-          Select a node to view and edit its parameters here.
-        </p>
-      </div>
+			<ExportGraphButton 
+				reactFlowInstance={reactFlowInstance.toObject()}
+			/>
+
+      <div style={{ flex: 1 }}>
+      	{/* Right: inspector placeholder */}
+				<div className="editor-inspector">
+					<div className="editor-sidebar-title">Inspector</div>
+					<p className="inspector-placeholder">
+						Select a node to view and edit its parameters here.
+					</p>
+				</div>
+			</div>
     </div>
   );
 }
