@@ -7,12 +7,12 @@ interface ValueNodeData {
     onChange?:(id: string, field: string, value: number) => void;
 }
 
-interface ValueNodeProp {
+interface ValueNodeProps {
     id: string;
     data: ValueNodeData;
 }
 
-export function ValueNode({id, data}: ValueNodeProp){
+export function ValueNode({id, data}: ValueNodeProps){
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseFloat(e.target.value) || 0;
         if (data.onChange){
