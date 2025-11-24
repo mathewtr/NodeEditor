@@ -1,5 +1,5 @@
 import type { NodeDefinitionsFile, NodeDefinition } from '../types/nodeDefinitions';
-import './NodeCatalog.css';
+import '../styles/NodeCatalog.css';
 
 interface NodeCatalogProps {
   definitions: NodeDefinitionsFile;

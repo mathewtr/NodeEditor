@@ -10,6 +10,7 @@ interface MandalObjectNodeProps{
     data: MandalObjectNodeData;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function MandalaObjectNode({id, data}: MandalObjectNodeProps){
     return(
         <div style={{border: "2px solid white", padding: "20px"}}>

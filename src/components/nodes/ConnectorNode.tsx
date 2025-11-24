@@ -11,7 +11,7 @@ interface ConnectorNodeProps{
     data: ConnectorNodeData;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export function ConnectorNode({id, data}: ConnectorNodeProps){
     return(
         <div style={{border: "2px solid white", padding: "20px"}}>

@@ -11,7 +11,7 @@ import ReactFlow,  {
 	useReactFlow
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import './App.css';
+import './styles/App.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
