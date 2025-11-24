@@ -14,13 +14,14 @@ interface ValueNodeProps {
 
 export function ValueNode({id, data}: ValueNodeProps){
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        
         const newValue = parseFloat(e.target.value) || 0;
         if (data.onChange){
             data.onChange (id, 'value', newValue);
         }
     };
     return (
-        <div style={{border: "2px solid black", padding: "10px"}}>
+        <div style={{border: "2px solid white", padding: "10px"}}>
             <div>{data.label}</div>
             <input
                 type="number"
@@ -30,6 +31,7 @@ export function ValueNode({id, data}: ValueNodeProps){
             <Handle
                 type="source"
                 position={Position.Right}
+                style={{background: "white", width:"10px", height: "10px"}}
             />
         </div>
     )

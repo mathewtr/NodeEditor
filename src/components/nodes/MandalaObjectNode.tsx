@@ -12,7 +12,7 @@ interface MandalObjectNodeProps{
 
 export function MandalaObjectNode({id, data}: MandalObjectNodeProps){
     return(
-        <div style={{border: "2px solid black", padding: "20px"}}>
+        <div style={{border: "2px solid white", padding: "20px"}}>
             <div>{data.label}</div>
             <div style={{position: "relative"}}>
             <div style={{position: "relative"}}>
@@ -20,16 +20,18 @@ export function MandalaObjectNode({id, data}: MandalObjectNodeProps){
                 type="target" 
                 position={Position.Left}
                 id="speed"
+                style={{background: "white", width:"10px", height: "10px"}}
                 />
-                <span>speed</span>
+                <span style={{marginLeft: "20px"}}>speed</span>
             </div>
             <div style={{position: "relative"}}>
                 <Handle 
                 type="target" 
                 position={Position.Left}
                 id="complexity"
+                style={{background: "white", width:"10px", height: "10px"}}
                 />
-                <span>complexity</span>
+                <span style={{marginLeft: "20px"}}>complexity</span>
             </div>
             </div>
             

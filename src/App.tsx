@@ -38,6 +38,25 @@ function App() {
     [setEdges]
   );
 
+  const handleNodeDataChange = useCallback((
+    nodeId: string,
+    field: string,
+    value: number ) => {
+      setNodes((nodes) =>
+         nodes.map((node) => {
+        if(node.id == nodeId){
+          return{
+            ...node,
+            data:{
+              ...node.data,
+              [field]: value
+            }
+          }
+        }
+        return node;
+      }));
+    },[setNodes]);
+
   const handleAddNode = useCallback((nodeTypeId: string) => {
     if (!definitions) return;
 
@@ -46,6 +65,7 @@ function App() {
 
     const data: Record<string, unknown> = {
       label: definition.title,
+      onChange: handleNodeDataChange,
     };
     
     definition.parameters.forEach(param => {
@@ -67,7 +87,7 @@ function App() {
     };
 
     setNodes((nds) => [...nds, newNode]);
-  }, [definitions, setNodes]);
+  }, [definitions, setNodes, handleNodeDataChange]);
 
   if (loading) {
     return <div>Loading node definitions...</div>;
@@ -106,7 +126,7 @@ function App() {
 				reactFlowInstance={reactFlowInstance.toObject()}
 			/>
 
-      <div style={{ flex: 1 }}>
+      <div style={{ width: "250px"}}>
       	{/* Right: inspector placeholder */}
 				<div className="editor-inspector">
 					<div className="editor-sidebar-title">Inspector</div>
