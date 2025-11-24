@@ -8,12 +8,14 @@ import ReactFlow,  {
   useEdgesState,
   Controls,
   Background,
+	useReactFlow
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
 import { ValueNode } from './components/nodes/ValueNode';
+import ExportGraphButton from './components/NodeExport';
 
 const nodeTypes = {
   valueNode: ValueNode,
@@ -23,6 +25,7 @@ function App() {
   const { definitions, loading, error } = useNodeDefinitions();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+	const reactFlowInstance = useReactFlow();
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -82,6 +85,10 @@ function App() {
         definitions={definitions}
         onAddNode={handleAddNode}
       />
+
+			<ExportGraphButton 
+				reactFlowInstance={reactFlowInstance.toObject()}
+			/>
 
       <div style={{ flex: 1 }}>
         <ReactFlow
