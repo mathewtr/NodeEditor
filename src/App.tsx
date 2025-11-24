@@ -16,12 +16,9 @@ import './App.css';
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
 import { ValueNode } from './components/nodes/ValueNode';
-<<<<<<< HEAD
 import ExportGraphButton from './components/NodeExport';
-=======
 import { ConnectorNode } from './components/nodes/ConnectorNode';
 import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
->>>>>>> 816d30151678b1c56bd2b043603a06f6ea619b1b
 
 const nodeTypes = {
   value: ValueNode,
@@ -105,32 +102,19 @@ function App() {
         </div>
       </div>
 
-<<<<<<< HEAD
 			<ExportGraphButton 
 				reactFlowInstance={reactFlowInstance.toObject()}
 			/>
 
       <div style={{ flex: 1 }}>
-        <ReactFlow
-          nodes={nodes}
-          nodeTypes={nodeTypes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-        >
-          <Controls position="top-right" />
-          <Background />
-        </ReactFlow>
-=======
-      {/* Right: inspector placeholder */}
-      <div className="editor-inspector">
-        <div className="editor-sidebar-title">Inspector</div>
-        <p className="inspector-placeholder">
-          Select a node to view and edit its parameters here.
-        </p>
->>>>>>> 816d30151678b1c56bd2b043603a06f6ea619b1b
-      </div>
+      	{/* Right: inspector placeholder */}
+				<div className="editor-inspector">
+					<div className="editor-sidebar-title">Inspector</div>
+					<p className="inspector-placeholder">
+						Select a node to view and edit its parameters here.
+					</p>
+				</div>
+			</div>
     </div>
   );
 }
