@@ -123,7 +123,7 @@ function App() {
       </div>
 
 			<ExportGraphButton 
-				reactFlowInstance={reactFlowInstance.toObject()}
+				reactFlowInstance={reactFlowInstance}
 			/>
 
       <div style={{ width: "250px"}}>
