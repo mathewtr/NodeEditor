@@ -1,4 +1,3 @@
-// import React from "react";
 import { Handle, Position } from "reactflow";
 
 interface ConnectorNodeData {
@@ -11,8 +10,7 @@ interface ConnectorNodeProps{
     data: ConnectorNodeData;
 }
 
-
-export function ConnectorNode({id, data}: ConnectorNodeProps){
+export function ConnectorNode({data}: ConnectorNodeProps){
     return(
         <div style={{border: "2px solid white", padding: "20px"}}>
             <div style={{textAlign: "center" }}>{data.label}</div>

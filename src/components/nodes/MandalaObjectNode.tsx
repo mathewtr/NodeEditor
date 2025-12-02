@@ -1,4 +1,3 @@
-import React from "react";
 import { Handle, Position } from "reactflow";
 
 
@@ -10,8 +9,7 @@ interface MandalObjectNodeProps{
     data: MandalObjectNodeData;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function MandalaObjectNode({id, data}: MandalObjectNodeProps){
+export function MandalaObjectNode({data}: MandalObjectNodeProps){
     return(
         <div style={{border: "2px solid white", padding: "20px"}}>
             <div>{data.label}</div>
