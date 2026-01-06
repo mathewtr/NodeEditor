@@ -19,12 +19,14 @@ import { ValueNode } from './components/nodes/ValueNode';
 import ExportGraphButton from './components/NodeExport';
 import { ConnectorNode } from './components/nodes/ConnectorNode';
 import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
+import { SineWaveNode } from './components/nodes/SineWaveNode';
 
 const nodeTypes = {
   value: ValueNode,
   complexity: ConnectorNode,
   bg_selector: ConnectorNode,
-  mandala_object: MandalaObjectNode
+  mandala_object: MandalaObjectNode,
+  sine_wave: SineWaveNode
 };
 
 function App() {

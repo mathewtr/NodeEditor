@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Handle, Position } from "reactflow";
 
 interface ValueNodeData {
-    label: "string";
+    label: string;
     value: number;
     onChange?:(id: string, field: string, value: number) => void;
 }
@@ -37,7 +37,6 @@ export function ValueNode({id, data}: ValueNodeProps){
                 value={localValue}
                 onChange={handleChange}
                 onBlur={handleBlur}
-
             />
             <Handle
                 type="source"
