@@ -1,5 +1,7 @@
 import type { Edge, ReactFlowInstance } from "reactflow";
 
+import '../styles/NodeExport.css';
+
 interface NodeExportProps {
 	reactFlowInstance: ReactFlowInstance<Node, Edge> | null; 
   }

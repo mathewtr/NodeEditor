@@ -124,10 +124,6 @@ function App() {
         </div>
       </div>
 
-			<ExportGraphButton 
-				reactFlowInstance={reactFlowInstance}
-			/>
-
       <div style={{ width: "250px"}}>
       	{/* Right: inspector placeholder */}
 				<div className="editor-inspector">
@@ -136,6 +132,11 @@ function App() {
 						Select a node to view and edit its parameters here.
 					</p>
 				</div>
+			</div>
+			<div className="floating-export-button">
+				<ExportGraphButton
+					reactFlowInstance={reactFlowInstance}
+				/>
 			</div>
     </div>
   );
