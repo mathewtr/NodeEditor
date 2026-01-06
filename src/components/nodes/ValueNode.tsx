@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Handle, Position } from "reactflow";
 
 interface ValueNodeData {
@@ -13,20 +13,31 @@ interface ValueNodeProps {
 }
 
 export function ValueNode({id, data}: ValueNodeProps){
+    const [localValue, setLocalValue] = useState(data.value.toString());
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        
-        const newValue = parseFloat(e.target.value) || 0;
-        if (data.onChange){
-            data.onChange (id, 'value', newValue);
+        setLocalValue(e.target.value);
+    };
+
+    const handleBlur = () => {
+        const parsed = parseFloat(localValue);
+        if (!isNaN(parsed)) {
+            data.onChange?.(id, 'value', parsed);  
+            setLocalValue(parsed.toString());    
+        } else {
+            setLocalValue(data.value.toString());
         }
     };
+
     return (
         <div style={{border: "2px solid white", padding: "10px"}}>
             <div>{data.label}</div>
             <input
                 type="number"
-                value={data.value}
+                value={localValue}
                 onChange={handleChange}
+                onBlur={handleBlur}
+
             />
             <Handle
                 type="source"
