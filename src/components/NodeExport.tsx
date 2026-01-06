@@ -10,11 +10,9 @@ const ExportGraphButton = ({reactFlowInstance}: NodeExportProps) => <button onCl
 		ExportGraph(reactFlowInstance);
 	}
 		}}>Export Node Graph</button>;
-// TODO: fix the red squiggly - Cole
 
 // Functionality to take the node graph, put it in a file, and download it
 const ExportGraph = (reactFlowInstance: ReactFlowInstance) => {
-	// TODO: Refine JSON object to only include nodes and edges before stringify - Cole
 	const jsonString = JSON.stringify(reactFlowInstance.toObject(), null, 2);
 	const link: HTMLAnchorElement = document.createElement("a");
 	const filename = "export.json";
