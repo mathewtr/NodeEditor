@@ -4,7 +4,7 @@
     "nodeTypes": [
       {
         "id": "value",
-        "title": "value",
+        "title": "Value",
         "type": "parameter",
         "inputs": [],
         "outputs": [
@@ -23,7 +23,7 @@
       },
       {
         "id": "complexity",
-        "title": "complexity",
+        "title": "Complexity",
         "type": "connector",
         "appParameter": "complexity",
         "inputs": [],
@@ -51,7 +51,7 @@
       },
       {
         "id": "mandala_object",
-        "title": "mandala object",
+        "title": "Mandala Object",
         "type": "object",
         "inputs": [
           {
@@ -60,17 +60,116 @@
           },
           {
             "id": "complexity",
-            "type": "int"
+            "type": "float"
+          }
+        ],
+        "outputs": [],
+        "parameters": []
+      },
+      {
+        "id": "sine_wave",
+        "title": "Sine Wave",
+        "type": "generator",
+        "inputs": [],
+        "outputs": [
+          {
+            "id": "output",
+            "type": "float",
+            "label": "sine wave"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "frequency",
+            "type": "float",
+            "default": 4
+          },
+          {
+            "name": "amount",
+            "type": "float",
+            "default": 2
+          }
+        ]
+      },
+      {
+        "id": "combine",
+        "title": "Combine",
+        "type": "utility",
+        "inputs": [
+          {
+            "id": "r",
+            "type": "float",
+            "label": "R"
+          },
+          {
+            "id": "g",
+            "type": "float",
+            "label": "G"
+          },
+          {
+            "id": "b",
+            "type": "float",
+            "label": "B"
+          },
+          {
+            "id": "a",
+            "type": "float",
+            "label": "A"
           }
         ],
         "outputs": [
           {
             "id": "output",
-            "type": "object"
+            "type": "vector4",
+            "label": "Color (v4)"
           }
         ],
+        "parameters": [
+          {
+            "name": "r",
+            "type": "float",
+            "default": 1
+          },
+          {
+            "name": "g",
+            "type": "float",
+            "default": 1
+          },
+          {
+            "name": "b",
+            "type": "float",
+            "default": 1
+          },
+          {
+            "name": "a",
+            "type": "float",
+            "default": 1
+          }
+        ]
+      },
+      {
+        "id": "background_texture",
+        "title": "Background Texture",
+        "type": "object",
+        "inputs": [
+          {
+            "id": "complexity",
+            "type": "float",
+            "label": "complexity"
+          },
+          {
+            "id": "index",
+            "type": "int",
+            "label": "index"
+          },
+          {
+            "id": "color",
+            "type": "vector4",
+            "label": "color"
+          }
+        ],
+        "outputs": [],
         "parameters": []
       }
-
     ]
   }
