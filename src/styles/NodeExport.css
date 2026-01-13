@@ -1,6 +1,21 @@
-.floating-export-button {
+.floating-export-button-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
+    bottom: 16px;
+    right: 16px;
+    z-index: 10;
+}
+
+.export-button {
+	color:white;
+	background: rgba(15, 23, 42, 1);
+  border: 2px solid rgba(55, 65, 81, 0.9);
+  border-radius: 100px;
+  padding: 8px;
+	transition: background 150ms, transform 150ms, border-color 150ms;
+}
+
+.export-button:hover {
+	background: rgba(30, 64, 175, 0.9);
+  border-color: rgba(129, 140, 248, 0.9);
+  transform: translateY(-2px);
 }

@@ -133,7 +133,7 @@ function App() {
 					</p>
 				</div>
 			</div>
-			<div className="floating-export-button">
+			<div className="floating-export-button-container">
 				<ExportGraphButton
 					reactFlowInstance={reactFlowInstance}
 				/>
