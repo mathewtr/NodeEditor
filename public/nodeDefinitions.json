@@ -180,7 +180,23 @@
           }
         ],
         "outputs": [],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "complexity",
+            "type": "float",
+            "default": 4
+          },
+          {
+            "name": "index",
+            "type": "int",
+            "default": 2
+          },
+          {
+            "name": "color",
+            "type": "vector4",
+            "default": [0.5, 1, 0.5, 1]
+          }
+        ]
       }
     ]
   }
