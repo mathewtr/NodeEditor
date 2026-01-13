@@ -21,6 +21,7 @@ import { ConnectorNode } from './components/nodes/ConnectorNode';
 import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
 import { SineWaveNode } from './components/nodes/SineWaveNode';
 import { BackgroundTextureNode } from './components/nodes/BackgroundTextureNode';
+import { CombineNode } from './components/nodes/CombineNode';
 
 const nodeTypes = {
   value: ValueNode,
@@ -28,7 +29,8 @@ const nodeTypes = {
   bg_selector: ConnectorNode,
   mandala_object: MandalaObjectNode,
   sine_wave: SineWaveNode,
-  background_texture: BackgroundTextureNode
+  background_texture: BackgroundTextureNode,
+  combine: CombineNode
 };
 
 function App() {
