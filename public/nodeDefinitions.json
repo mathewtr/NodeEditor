@@ -64,7 +64,18 @@
           }
         ],
         "outputs": [],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "speed",
+            "type": "float",
+            "default": 4
+          },
+          {
+            "name": "complexity",
+            "type": "float",
+            "default": 2
+          }
+        ]
       },
       {
         "id": "sine_wave",
