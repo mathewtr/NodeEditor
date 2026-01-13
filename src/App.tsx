@@ -20,13 +20,15 @@ import ExportGraphButton from './components/NodeExport';
 import { ConnectorNode } from './components/nodes/ConnectorNode';
 import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
 import { SineWaveNode } from './components/nodes/SineWaveNode';
+import { BackgroundTextureNode } from './components/nodes/BackgroundTextureNode';
 
 const nodeTypes = {
   value: ValueNode,
   complexity: ConnectorNode,
   bg_selector: ConnectorNode,
   mandala_object: MandalaObjectNode,
-  sine_wave: SineWaveNode
+  sine_wave: SineWaveNode,
+  background_texture: BackgroundTextureNode
 };
 
 function App() {
