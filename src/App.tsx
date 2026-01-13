@@ -15,13 +15,15 @@ import './styles/App.css';
 
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
-import { ValueNode } from './components/nodes/ValueNode';
 import ExportGraphButton from './components/NodeExport';
-import { ConnectorNode } from './components/nodes/ConnectorNode';
-import { MandalaObjectNode } from './components/nodes/MandalaObjectNode';
-import { SineWaveNode } from './components/nodes/SineWaveNode';
-import { BackgroundTextureNode } from './components/nodes/BackgroundTextureNode';
-import { CombineNode } from './components/nodes/CombineNode';
+import { 
+  ValueNode, 
+  ConnectorNode, 
+  MandalaObjectNode, 
+  SineWaveNode, 
+  BackgroundTextureNode, 
+  CombineNode 
+} from './components/nodes';
 
 const nodeTypes = {
   value: ValueNode,
