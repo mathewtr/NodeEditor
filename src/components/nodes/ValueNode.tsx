@@ -14,12 +14,22 @@ interface ValueNodeProps {
 
 export function ValueNode({id, data}: ValueNodeProps){
     const [localValue, setLocalValue] = useState(data.value.toString());
+    const [isEditing, setIsEditing] = useState(false);
+    
+    // When not editing, always show current data.value
+    const displayValue = isEditing ? localValue : data.value.toString();
+    
+    const handleFocus = () => {
+        setIsEditing(true);
+        setLocalValue(data.value.toString());
+    };
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLocalValue(e.target.value);
     };
 
     const handleBlur = () => {
+        setIsEditing(false);
         const parsed = parseFloat(localValue);
         if (!isNaN(parsed)) {
             data.onChange?.(id, 'value', parsed);  
@@ -28,15 +38,23 @@ export function ValueNode({id, data}: ValueNodeProps){
             setLocalValue(data.value.toString());
         }
     };
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.currentTarget.blur();
+        }
+    };
 
     return (
         <div style={{border: "2px solid white", padding: "10px"}}>
             <div>{data.label}</div>
             <input
                 type="number"
-                value={localValue}
+                value={displayValue}
                 onChange={handleChange}
+                onFocus={handleFocus}
                 onBlur={handleBlur}
+                onKeyDown={handleKeyDown}
             />
             <Handle
                 type="source"

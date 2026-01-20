@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import ReactFlow,  {
   type Node,
   type Edge,
@@ -8,11 +8,11 @@ import ReactFlow,  {
   useEdgesState,
   Controls,
   Background,
-	useReactFlow
+	useReactFlow,
+  type NodeMouseHandler
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import './styles/App.css';
-
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
 import ExportGraphButton from './components/NodeExport';
@@ -24,6 +24,7 @@ import {
   BackgroundTextureNode, 
   CombineNode 
 } from './components/nodes';
+import { Inspector } from './components/Inspector';
 
 const nodeTypes = {
   value: ValueNode,
@@ -40,19 +41,68 @@ function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 	const reactFlowInstance = useReactFlow();
+  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
+  const onNodeClick: NodeMouseHandler = useCallback((_event, node) => {
+    setSelectedNode(node);
+  },[]);
+
+  const onPaneClick = useCallback(() => {
+    setSelectedNode(null);
+  }, []);
+
+  const closeInspector = useCallback(() => {
+    setSelectedNode(null);
+  },[]);
+
+  // HANDLER: Update node parameter from inspector
+  const handleParameterUpdate = useCallback((
+    nodeId: string,
+    paramName: string,
+    value: number | number[]
+  ) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (node.id === nodeId) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              [paramName]: value
+            }
+          };
+        }
+        return node;
+      })
+    );
+
+    // Update selectedNode to reflect changes immediately in inspector
+    setSelectedNode((prev) => {
+      if (prev?.id === nodeId) {
+        return {
+          ...prev,
+          data: {
+            ...prev.data,
+            [paramName]: value
+          }
+        };
+      }
+      return prev;
+    });
+  }, [setNodes]);
+
   const handleNodeDataChange = useCallback((
     nodeId: string,
     field: string,
-    value: number ) => {
+    value: number | number[] ) => {
       setNodes((nodes) =>
          nodes.map((node) => {
-        if(node.id == nodeId){
+        if(node.id === nodeId){
           return{
             ...node,
             data:{
@@ -63,6 +113,15 @@ function App() {
         }
         return node;
       }));
+      setSelectedNode((prev) => {
+        if (prev?.id === nodeId) {
+          return {
+            ...prev,
+            data: { ...prev.data, [field]: value }
+          };
+        }
+        return prev;
+      });
     },[setNodes]);
 
   const handleAddNode = useCallback((nodeTypeId: string) => {
@@ -107,13 +166,11 @@ function App() {
 
   return (
     <div className="app-root">
-      {/* Left sidebar: node catalog */}
       <div className="editor-sidebar">
         <div className="editor-sidebar-title">Node Catalog</div>
         <NodeCatalog definitions={definitions} onAddNode={handleAddNode} />
       </div>
 
-      {/* Center: React Flow canvas */}
       <div className="editor-canvas">
         <div className="editor-canvas-inner">
           <ReactFlow
@@ -123,6 +180,8 @@ function App() {
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
+            onNodeClick={onNodeClick}
+            onPaneClick={onPaneClick}
           >
             <Controls position="top-right" />
             <Background />
@@ -130,15 +189,12 @@ function App() {
         </div>
       </div>
 
-      <div style={{ width: "250px"}}>
-      	{/* Right: inspector placeholder */}
-				<div className="editor-inspector">
-					<div className="editor-sidebar-title">Inspector</div>
-					<p className="inspector-placeholder">
-						Select a node to view and edit its parameters here.
-					</p>
-				</div>
-			</div>
+      <Inspector 
+        selectedNode={selectedNode} 
+        onClose={closeInspector}
+        onUpdateParameter={handleParameterUpdate}
+      />
+
 			<div className="floating-export-button-container">
 				<ExportGraphButton
 					reactFlowInstance={reactFlowInstance}

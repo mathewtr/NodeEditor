@@ -16,16 +16,24 @@ interface SineWaveNodeProps {
 export function SineWaveNode({id, data}: SineWaveNodeProps) {
     const [localFrequency, setLocalFrequency] = useState(data.frequency.toString());
     const [localAmount, setLocalAmount] = useState(data.amount.toString());
+    const [isEditingFrequency, setIsEditingFrequency] = useState(false);
+    const [isEditingAmount, setIsEditingAmount] = useState(false);
+    
+    // Display values: use local when editing, data when not
+    const displayFrequency = isEditingFrequency ? localFrequency : data.frequency.toString();
+    const displayAmount = isEditingAmount ? localAmount : data.amount.toString();
+    
+    const handleFrequencyFocus = () => {
+        setIsEditingFrequency(true);
+        setLocalFrequency(data.frequency.toString());
+    };
     
     const handleFrequencyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLocalFrequency(e.target.value);
     };
 
-    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalAmount(e.target.value);
-    };
-
     const handleFrequencyBlur = () => {
+        setIsEditingFrequency(false);
         const parsed = parseFloat(localFrequency);
         if (!isNaN(parsed)) {
             data.onChange?.(id, 'frequency', parsed);  
@@ -34,14 +42,30 @@ export function SineWaveNode({id, data}: SineWaveNodeProps) {
             setLocalFrequency(data.frequency.toString());
         }
     };
+    
+    const handleAmountFocus = () => {
+        setIsEditingAmount(true);
+        setLocalAmount(data.amount.toString());
+    };
+    
+    const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLocalAmount(e.target.value);
+    };
 
     const handleAmountBlur = () => {
+        setIsEditingAmount(false);
         const parsed = parseFloat(localAmount);
         if (!isNaN(parsed)) {
             data.onChange?.(id, 'amount', parsed);  
             setLocalAmount(parsed.toString());    
         } else {
             setLocalAmount(data.amount.toString());
+        }
+    };
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.currentTarget.blur();
         }
     };
 
@@ -53,10 +77,13 @@ export function SineWaveNode({id, data}: SineWaveNodeProps) {
                 <label style={{fontSize: "12px"}}>Frequency:</label>
                 <input
                     type="number"
-                    value={localFrequency}
+                    value={displayFrequency}
                     onChange={handleFrequencyChange}
+                    onFocus={handleFrequencyFocus}
                     onBlur={handleFrequencyBlur}
+                    onKeyDown={handleKeyDown}
                     style={{width: "100%"}}
+
                 />
             </div>
             
@@ -64,9 +91,11 @@ export function SineWaveNode({id, data}: SineWaveNodeProps) {
                 <label style={{fontSize: "12px"}}>Amount:</label>
                 <input
                     type="number"
-                    value={localAmount}
+                    value={displayAmount}
                     onChange={handleAmountChange}
+                    onFocus={handleAmountFocus}
                     onBlur={handleAmountBlur}
+                    onKeyDown={handleKeyDown}
                     style={{width: "100%"}}
                 />
             </div>

@@ -1,4 +1,3 @@
-// src/nodes/BackgroundTextureNode.tsx
 import { useState } from "react";
 import { Handle, Position } from "reactflow";
 
@@ -19,18 +18,27 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
     const [localComplexity, setLocalComplexity] = useState(data.complexity.toString());
     const [localIndex, setLocalIndex] = useState(data.index.toString());
     const [localColor, setLocalColor] = useState(data.color.join(', '));
+    const [isEditingComplexity, setIsEditingComplexity] = useState(false);
+    const [isEditingIndex, setIsEditingIndex] = useState(false);
+    const [isEditingColor, setIsEditingColor] = useState(false);
+
+    // Display values: use local when editing, data when not
+    const displayComplexity = isEditingComplexity ? localComplexity : data.complexity.toString();
+    const displayIndex = isEditingIndex ? localIndex : data.index.toString();
+    const displayColor = isEditingColor ? localColor : data.color.join(', ');
+
+    // Complexity handlers
+    const handleComplexityFocus = () => {
+        setIsEditingComplexity(true);
+        setLocalComplexity(data.complexity.toString());
+    };
 
     const handleComplexityChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setLocalComplexity(e.target.value);
-    }
-    const handleIndexChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setLocalIndex(e.target.value);
-    }
-    const handleColorChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setLocalColor(e.target.value);
-    }
+    };
 
     const handleComplexityBlur = () => {
+        setIsEditingComplexity(false);
         const parsed = parseFloat(localComplexity);
         if(!isNaN(parsed)) {
             data.onChange?.(id, "complexity", parsed);
@@ -38,9 +46,20 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
         } else {
             setLocalComplexity(data.complexity.toString());
         }
-    }
+    };
+
+    // Index handlers
+    const handleIndexFocus = () => {
+        setIsEditingIndex(true);
+        setLocalIndex(data.index.toString());
+    };
+
+    const handleIndexChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setLocalIndex(e.target.value);
+    };
 
     const handleIndexBlur = () => {
+        setIsEditingIndex(false);
         const parsed = parseInt(localIndex);
         if (!isNaN(parsed)) {
             data.onChange?.(id, 'index', parsed);
@@ -50,7 +69,18 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
         }
     };
 
+    // Color handlers
+    const handleColorFocus = () => {
+        setIsEditingColor(true);
+        setLocalColor(data.color.join(', '));
+    };
+
+    const handleColorChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setLocalColor(e.target.value);
+    };
+
     const handleColorBlur = () => {
+        setIsEditingColor(false);
         // Parse comma-separated values: "1, 1, 1, 1" -> [1, 1, 1, 1]
         const values = localColor.split(',').map(v => parseFloat(v.trim()));
         
@@ -61,6 +91,13 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
         } else {
             // Invalid format, revert to original
             setLocalColor(data.color.join(', '));
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.currentTarget.blur();
         }
     };
 
@@ -79,9 +116,11 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
                     />
                     <input
                         type="number"
-                        value={localComplexity}
+                        value={displayComplexity}
                         onChange={handleComplexityChange}
+                        onFocus={handleComplexityFocus}
                         onBlur={handleComplexityBlur}
+                        onKeyDown={handleKeyDown}
                         style={{ width: "100%" }}
                     />
                 </div>
@@ -98,9 +137,11 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
                     />
                     <input
                         type="number"
-                        value={localIndex}
+                        value={displayIndex}
                         onChange={handleIndexChange}
+                        onFocus={handleIndexFocus}
                         onBlur={handleIndexBlur}
+                        onKeyDown={handleKeyDown}
                         style={{ width: "100%" }}
                     />
                 </div>
@@ -117,9 +158,11 @@ export function BackgroundTextureNode({ id, data }: BackgroundTextureNodeProps) 
                     />
                     <input
                         type="text"
-                        value={localColor}
+                        value={displayColor}
                         onChange={handleColorChange}
+                        onFocus={handleColorFocus}
                         onBlur={handleColorBlur}
+                        onKeyDown={handleKeyDown}
                         placeholder=".5, 1, .5, 1"
                         style={{ width: "100%" }}
                     />
