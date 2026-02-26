@@ -16,6 +16,7 @@ import './styles/App.css';
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeCatalog } from './components/NodeCatalog';
 import ExportGraphButton from './components/NodeExport';
+import ImportGraphButton from './components/NodeImport';
 import {
   ValueNode,
   ConnectorNode,
@@ -200,6 +201,11 @@ function App() {
 
 			<div className="floating-export-button-container">
 				<ExportGraphButton
+					reactFlowInstance={reactFlowInstance}
+				/>
+			</div>
+			<div className="floating-import-button-container">
+				<ImportGraphButton
 					reactFlowInstance={reactFlowInstance}
 				/>
 			</div>
