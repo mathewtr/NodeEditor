@@ -203,8 +203,6 @@ function App() {
 				<ExportGraphButton
 					reactFlowInstance={reactFlowInstance}
 				/>
-			</div>
-			<div className="floating-import-button-container">
 				<ImportGraphButton
 					reactFlowInstance={reactFlowInstance}
 				/>
