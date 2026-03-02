@@ -1,33 +1,38 @@
-import type { Edge, ReactFlowInstance } from "reactflow";
-
+import type { Node, Edge, ReactFlowInstance } from 'reactflow';
 import '../styles/NodeExport.css';
 
 interface NodeExportProps {
-	reactFlowInstance: ReactFlowInstance<Node, Edge> | null; 
-  }
-
-// The DOM Button object that, when clicked, triggers the download
-const ExportGraphButton = ({reactFlowInstance}: NodeExportProps) => <button className="export-button" onClick={() => 
-	{if (reactFlowInstance) {
-		ExportGraph(reactFlowInstance);
-	}
-		}}>Download Node Graph</button>;
-
-// Functionality to take the node graph, put it in a file, and download it
-const ExportGraph = (reactFlowInstance: ReactFlowInstance) => {
-	const reactFlowContents = reactFlowInstance.toObject()
-	const exportContents = { nodes: reactFlowContents.nodes, edges: reactFlowContents.edges}
-	const jsonString = JSON.stringify(exportContents, null, 2);
-	console.log(jsonString)
-	const link: HTMLAnchorElement = document.createElement("a");
-	const filename = "export.json";
-	const contentType = "application/json;charset=utf-8;";
-	link.href = 'data:' + contentType + ',' + encodeURIComponent(jsonString);
-	link.download = filename;
-	link.target = '_blank';
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+  reactFlowInstance: ReactFlowInstance<Node, Edge>;
 }
 
-export default ExportGraphButton;
+const ExportGraphButton = ({ reactFlowInstance }: NodeExportProps) => (
+  <button className="graph-action-button" onClick={() => exportGraph(reactFlowInstance)}>
+    Export
+  </button>
+);
+
+function exportGraph(reactFlowInstance: ReactFlowInstance) {
+  const { nodes, edges } = reactFlowInstance.toObject();
+
+  // Strip non-serializable callbacks from node data
+  const cleanNodes = nodes.map((node) => ({
+    ...node,
+    data: Object.fromEntries(
+      Object.entries(node.data).filter(([, v]) => typeof v !== 'function')
+    ),
+  }));
+
+  const jsonString = JSON.stringify({ nodes: cleanNodes, edges }, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'export.json';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+export { ExportGraphButton };

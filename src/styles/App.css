@@ -15,6 +15,8 @@
   border-right: 1px solid rgba(148, 163, 184, 0.4);
   padding: 0.75rem;
   background: rgba(15, 23, 42, 0.95);
+  overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .editor-sidebar-title {
@@ -170,4 +172,64 @@
 .param-input:focus {
   outline: none;
   border-color: #22d3ee;
+}
+
+/* Handle styling */
+.node-handle {
+  background: #22d3ee;
+  width: 10px;
+  height: 10px;
+}
+
+/* NodeField component layout */
+.node-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.node-field-label {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.node-field-input-wrapper {
+  position: relative;
+}
+
+.node-field-input-wrapper .node-handle {
+  left: -15px;
+}
+
+.node-field .param-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Connector parameter display */
+.connector-param {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #a855f7;
+  padding: 0.3rem 0.5rem;
+  background: rgba(17, 24, 39, 0.9);
+  border-radius: 0.35rem;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  text-align: center;
+}
+
+/* Multi-output handle labels (e.g. Split node with R, G, B, A outputs) */
+.node-output-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.node-output-label {
+  font-size: 0.65rem;
+  color: #a855f7;
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
