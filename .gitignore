@@ -1,0 +1,14 @@
+# Dependencies (Massive folder, Vercel will install this itself)
+node_modules/
+
+# Production build output (Vercel will generate this automatically)
+dist/
+dist-ssr/
+
+# Local Environment variables (Keep your API keys and secrets safe!)
+.env
+.env.local
+.env.*.local
+
+# macOS system files 
+.DS_Store

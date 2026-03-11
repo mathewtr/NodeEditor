@@ -1,0 +1,76 @@
+.floating-actions-container {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
+
+.graph-action-button {
+  color: white;
+  background: rgba(15, 23, 42, 1);
+  border: 2px solid rgba(55, 65, 81, 0.9);
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 150ms, transform 150ms, border-color 150ms;
+}
+
+.graph-action-button:hover {
+  background: rgba(30, 64, 175, 0.9);
+  border-color: rgba(129, 140, 248, 0.9);
+  transform: translateY(-2px);
+}
+
+.save-button {
+  border-color: rgba(34, 197, 94, 0.6);
+}
+
+.save-button:hover {
+  background: rgba(22, 101, 52, 0.9);
+  border-color: rgba(74, 222, 128, 0.9);
+}
+
+/* Export filename prompt */
+.export-filename-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(15, 23, 42, 1);
+  border: 2px solid rgba(99, 102, 241, 0.7);
+  border-radius: 100px;
+  padding: 4px 6px 4px 12px;
+}
+
+.export-filename-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 0.8rem;
+  width: 100px;
+  font-family: inherit;
+}
+
+.export-filename-input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+.export-filename-suffix {
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+.export-confirm-button {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  border-color: rgba(99, 102, 241, 0.6);
+}
+
+.export-cancel-button {
+  padding: 4px 10px;
+  font-size: 0.75rem;
+}
