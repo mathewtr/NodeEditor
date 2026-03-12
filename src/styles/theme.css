@@ -1,0 +1,142 @@
+/* ═══════════════════════════════════════════════
+   FloatNodes Theme System — Soft & Rounded
+   ═══════════════════════════════════════════════ */
+
+/* ── Light Theme (default) ── */
+:root {
+  /* Backgrounds */
+  --bg-app: #f5f5f7;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f9fafb;
+  --bg-inset: #f0f1f3;
+  --bg-canvas: #eeeef0;
+  --bg-hover: rgba(99, 102, 241, 0.08);
+  --bg-active: rgba(99, 102, 241, 0.12);
+
+  /* Text */
+  --text-primary: #1c1c1e;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border-default: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-strong: rgba(0, 0, 0, 0.12);
+
+  /* Shadows — soft & diffused */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-panel: -2px 0 16px rgba(0, 0, 0, 0.06);
+
+  /* Radii — rounded & friendly */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* Accent colors (semantic) */
+  --accent-primary: #6366f1;
+  --accent-primary-soft: rgba(99, 102, 241, 0.12);
+  --accent-cyan: #0891b2;
+  --accent-cyan-soft: rgba(8, 145, 178, 0.1);
+  --accent-purple: #7c3aed;
+  --accent-purple-soft: rgba(124, 58, 237, 0.1);
+  --accent-green: #16a34a;
+  --accent-green-soft: rgba(22, 163, 74, 0.1);
+  --accent-orange: #ea580c;
+  --accent-orange-soft: rgba(234, 88, 12, 0.1);
+  --accent-yellow: #ca8a04;
+  --accent-yellow-soft: rgba(202, 138, 4, 0.1);
+  --accent-rose: #e11d48;
+  --accent-rose-soft: rgba(225, 29, 72, 0.1);
+  --accent-sky: #0284c7;
+  --accent-sky-soft: rgba(2, 132, 199, 0.1);
+
+  /* Interactive */
+  --hover-bg: rgba(99, 102, 241, 0.08);
+  --focus-ring: rgba(99, 102, 241, 0.4);
+  --input-bg: #ffffff;
+  --input-border: rgba(0, 0, 0, 0.12);
+  --input-focus-border: #6366f1;
+
+  /* Scrollbar */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.12);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.2);
+
+  /* Node handle colors */
+  --handle-input: #0891b2;
+  --handle-output: #7c3aed;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+}
+
+/* ── Dark Theme ── */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-app: #1a1a2e;
+  --bg-surface: #222240;
+  --bg-elevated: #2a2a4a;
+  --bg-inset: #1e1e36;
+  --bg-canvas: #16162a;
+  --bg-hover: rgba(129, 140, 248, 0.1);
+  --bg-active: rgba(129, 140, 248, 0.15);
+
+  /* Text */
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --text-inverse: #1c1c1e;
+
+  /* Borders */
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(255, 255, 255, 0.12);
+
+  /* Shadows — darker, softer */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-panel: -2px 0 16px rgba(0, 0, 0, 0.3);
+
+  /* Accent colors (brighter for dark bg) */
+  --accent-primary: #818cf8;
+  --accent-primary-soft: rgba(129, 140, 248, 0.15);
+  --accent-cyan: #22d3ee;
+  --accent-cyan-soft: rgba(34, 211, 238, 0.12);
+  --accent-purple: #a78bfa;
+  --accent-purple-soft: rgba(167, 139, 250, 0.12);
+  --accent-green: #4ade80;
+  --accent-green-soft: rgba(74, 222, 128, 0.12);
+  --accent-orange: #fb923c;
+  --accent-orange-soft: rgba(251, 146, 60, 0.12);
+  --accent-yellow: #facc15;
+  --accent-yellow-soft: rgba(250, 204, 21, 0.12);
+  --accent-rose: #fb7185;
+  --accent-rose-soft: rgba(251, 113, 133, 0.12);
+  --accent-sky: #38bdf8;
+  --accent-sky-soft: rgba(56, 189, 248, 0.12);
+
+  /* Interactive */
+  --hover-bg: rgba(129, 140, 248, 0.1);
+  --focus-ring: rgba(129, 140, 248, 0.4);
+  --input-bg: #1e1e36;
+  --input-border: rgba(255, 255, 255, 0.1);
+  --input-focus-border: #818cf8;
+
+  /* Scrollbar */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.18);
+
+  /* Node handle colors */
+  --handle-input: #22d3ee;
+  --handle-output: #a78bfa;
+}

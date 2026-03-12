@@ -1,0 +1,190 @@
+{
+  "version": "1.1",
+  "description": "Node type definitions for FloatVR visual editor",
+  "nodeTypes": [
+    {
+      "id": "value",
+      "title": "Value",
+      "type": "parameter",
+      "inputs": [],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "value", "type": "float", "default": 4 }
+      ]
+    },
+    {
+      "id": "input",
+      "title": "Input",
+      "type": "input",
+      "inputs": [],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "name", "type": "string", "default": "" }
+      ]
+    },
+    {
+      "id": "output",
+      "title": "Output",
+      "type": "output",
+      "inputs": [
+        { "id": "value", "type": "float" }
+      ],
+      "outputs": [],
+      "parameters": [
+        { "name": "target", "type": "string", "default": "" },
+        { "name": "value", "type": "float", "default": 0 }
+      ]
+    },
+    {
+      "id": "time",
+      "title": "Time",
+      "type": "generator",
+      "inputs": [],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": []
+    },
+    {
+      "id": "random_range",
+      "title": "Random Range",
+      "type": "generator",
+      "inputs": [],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "min", "type": "float", "default": 0 },
+        { "name": "max", "type": "float", "default": 1 }
+      ]
+    },
+    {
+      "id": "sine_wave",
+      "title": "Sine Wave",
+      "type": "generator",
+      "inputs": [
+        { "id": "input", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "frequency", "type": "float", "default": 4 },
+        { "name": "amount", "type": "float", "default": 2 }
+      ]
+    },
+    {
+      "id": "add",
+      "title": "Add",
+      "type": "processing",
+      "inputs": [
+        { "id": "a", "type": "float" },
+        { "id": "b", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "a", "type": "float", "default": 0 },
+        { "name": "b", "type": "float", "default": 0 }
+      ]
+    },
+    {
+      "id": "multiply",
+      "title": "Multiply",
+      "type": "processing",
+      "inputs": [
+        { "id": "a", "type": "float" },
+        { "id": "b", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "a", "type": "float", "default": 0 },
+        { "name": "b", "type": "float", "default": 0 }
+      ]
+    },
+    {
+      "id": "clamp",
+      "title": "Clamp",
+      "type": "processing",
+      "inputs": [
+        { "id": "input", "type": "float" },
+        { "id": "min", "type": "float" },
+        { "id": "max", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "input", "type": "float", "default": 0 },
+        { "name": "min", "type": "float", "default": 0 },
+        { "name": "max", "type": "float", "default": 1 }
+      ]
+    },
+    {
+      "id": "remap",
+      "title": "Remap",
+      "type": "processing",
+      "inputs": [
+        { "id": "input", "type": "float" },
+        { "id": "inMin", "type": "float" },
+        { "id": "inMax", "type": "float" },
+        { "id": "outMin", "type": "float" },
+        { "id": "outMax", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "input", "type": "float", "default": 0 },
+        { "name": "inMin", "type": "float", "default": 0 },
+        { "name": "inMax", "type": "float", "default": 1 },
+        { "name": "outMin", "type": "float", "default": 0 },
+        { "name": "outMax", "type": "float", "default": 1 }
+      ]
+    },
+    {
+      "id": "combine",
+      "title": "Combine",
+      "type": "utility",
+      "inputs": [
+        { "id": "r", "type": "float" },
+        { "id": "g", "type": "float" },
+        { "id": "b", "type": "float" },
+        { "id": "a", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "vector4" }
+      ],
+      "parameters": [
+        { "name": "r", "type": "float", "default": 1 },
+        { "name": "g", "type": "float", "default": 1 },
+        { "name": "b", "type": "float", "default": 1 },
+        { "name": "a", "type": "float", "default": 1 }
+      ]
+    },
+    {
+      "id": "split",
+      "title": "Split",
+      "type": "utility",
+      "inputs": [
+        { "id": "input", "type": "vector4" }
+      ],
+      "outputs": [
+        { "id": "r", "type": "float" },
+        { "id": "g", "type": "float" },
+        { "id": "b", "type": "float" },
+        { "id": "a", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "input", "type": "vector4", "default": [0, 0, 0, 1] }
+      ]
+    }
+  ]
+}

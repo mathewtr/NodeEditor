@@ -1,0 +1,225 @@
+import { useCallback, useMemo, useState } from 'react';
+import ReactFlow, {
+  type Node,
+  type Edge,
+  type Connection,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  Controls,
+  Background,
+  useReactFlow,
+  type NodeMouseHandler
+} from 'reactflow';
+import 'reactflow/dist/style.css';
+import './styles/App.css';
+import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
+import { NodeDefinitionsContext } from './contexts/NodeDefinitionsContext';
+import { NodeCatalog } from './components/NodeCatalog';
+import { ExportGraphButton } from './components/NodeExport';
+import { ImportGraphButton } from './components/NodeImport';
+import { SaveGraphButton } from './components/NodeSave';
+import { GenericNode } from './components/nodes/GenericNode';
+import { Inspector } from './components/Inspector';
+import { ThemeToggle } from './components/ThemeToggle';
+
+function App() {
+  const { definitions, loading, error } = useNodeDefinitions();
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const reactFlowInstance = useReactFlow();
+  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  // Build nodeTypes map dynamically from definitions — every type uses GenericNode
+  const nodeTypes = useMemo(() => {
+    if (!definitions) return {};
+    const types: Record<string, typeof GenericNode> = {};
+    for (const def of definitions.nodeTypes) {
+      types[def.id] = GenericNode;
+    }
+    return types;
+  }, [definitions]);
+
+  const onConnect = useCallback(
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges]
+  );
+
+  const onNodeClick: NodeMouseHandler = useCallback((_event, node) => {
+    setSelectedNode(node);
+  }, []);
+
+  const onPaneClick = useCallback(() => {
+    setSelectedNode(null);
+  }, []);
+
+  const closeInspector = useCallback(() => {
+    setSelectedNode(null);
+  }, []);
+
+  const onNodesDelete = useCallback((deleted: Node[]) => {
+    setSelectedNode((prev) =>
+      prev && deleted.some((n) => n.id === prev.id) ? null : prev
+    );
+  }, []);
+
+  const handleNodeDataChange = useCallback((
+    nodeId: string,
+    field: string,
+    value: number | number[] | string
+  ) => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        if (node.id === nodeId) {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              [field]: value
+            }
+          };
+        }
+        return node;
+      })
+    );
+
+    setSelectedNode((prev) => {
+      if (prev?.id === nodeId) {
+        return {
+          ...prev,
+          data: { ...prev.data, [field]: value }
+        };
+      }
+      return prev;
+    });
+  }, [setNodes]);
+
+  const handleAddNode = useCallback((nodeTypeId: string) => {
+    if (!definitions) return;
+
+    const definition = getNodeDefinition(definitions, nodeTypeId);
+    if (!definition) return;
+
+    const data: Record<string, unknown> = {
+      label: definition.title,
+      onChange: handleNodeDataChange,
+    };
+
+    definition.parameters.forEach(param => {
+      data[param.name] = param.default;
+    });
+
+    const newNode: Node = {
+      id: `node-${Date.now()}`,
+      type: nodeTypeId,
+      position: {
+        x: Math.random() * 400 + 100,
+        y: Math.random() * 400 + 100
+      },
+      data,
+    };
+
+    setNodes((nds) => [...nds, newNode]);
+  }, [definitions, setNodes, handleNodeDataChange]);
+
+  const handleImportGraph = useCallback((
+    importedNodes: Node[],
+    importedEdges: Edge[]
+  ) => {
+    const nodesWithCallbacks = importedNodes.map((node) => ({
+      ...node,
+      data: {
+        ...node.data,
+        onChange: handleNodeDataChange,
+      }
+    }));
+
+    setNodes(nodesWithCallbacks);
+    setEdges(importedEdges);
+    setSelectedNode(null);
+  }, [setNodes, setEdges, handleNodeDataChange]);
+
+  if (loading) {
+    return <div>Loading node definitions...</div>;
+  }
+
+  if (error || !definitions) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <NodeDefinitionsContext.Provider value={definitions}>
+      <div className="app-root">
+        {/* Top Navbar */}
+        <nav className="top-navbar">
+          <div className="navbar-left">
+            <button
+              className="sidebar-toggle-button"
+              onClick={() => setSidebarOpen((o) => !o)}
+              title={sidebarOpen ? 'Hide node catalog' : 'Show node catalog'}
+              aria-label={sidebarOpen ? 'Hide node catalog' : 'Show node catalog'}
+            >
+              {sidebarOpen ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="9" y1="3" x2="9" y2="21" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" /><line x1="9" y1="3" x2="9" y2="21" /><polyline points="14 9 17 12 14 15" />
+                </svg>
+              )}
+            </button>
+            <span className="navbar-title">FloatNodes</span>
+          </div>
+
+          <div className="navbar-actions">
+            <ImportGraphButton onImport={handleImportGraph} />
+            <SaveGraphButton reactFlowInstance={reactFlowInstance} />
+            <ExportGraphButton reactFlowInstance={reactFlowInstance} />
+            <div className="navbar-divider" />
+            <ThemeToggle />
+          </div>
+        </nav>
+
+        {/* Main Content */}
+        <div className="editor-body">
+          {/* Collapsible Sidebar */}
+          <div className={`editor-sidebar ${sidebarOpen ? '' : 'editor-sidebar-collapsed'}`}>
+            {sidebarOpen && (
+              <NodeCatalog definitions={definitions} onAddNode={handleAddNode} />
+            )}
+          </div>
+
+          {/* Canvas */}
+          <div className="editor-canvas">
+            <div className="editor-canvas-inner">
+              <ReactFlow
+                nodes={nodes}
+                nodeTypes={nodeTypes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                onNodeClick={onNodeClick}
+                onPaneClick={onPaneClick}
+                onNodesDelete={onNodesDelete}
+              >
+                <Controls position="top-right" />
+                <Background />
+              </ReactFlow>
+            </div>
+          </div>
+        </div>
+
+        <Inspector
+          selectedNode={selectedNode}
+          onClose={closeInspector}
+          onUpdateParameter={handleNodeDataChange}
+        />
+      </div>
+    </NodeDefinitionsContext.Provider>
+  );
+}
+
+export default App;

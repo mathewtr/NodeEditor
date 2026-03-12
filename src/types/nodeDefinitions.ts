@@ -1,0 +1,32 @@
+// What data types can flow through connections?
+export type ConnectionType = 'float' | 'int' | 'vector4' | 'object';
+
+//  What does an input/output port look like?
+export interface NodePort {
+  id: string;           
+  type: ConnectionType; 
+}
+
+// What does an editable parameter look like?
+export interface NodeParameter {
+  name: string;                              // (e.g. "frequency")
+  type: 'float' | 'int' | 'vector4' | 'string';
+  default: number | number[] | string;       // number for float/int, number[] for vector4, string for string
+}
+
+// What does a complete node type definition look like?
+export interface NodeDefinition {
+  id: string;                  // Unique ID (e.g., "value", "sine_wave", "input", "output")
+  title: string;               // Display name (e.g., "Sine Wave", "Input", "Output")
+  type: string;                // Category (e.g., "parameter", "input", "output", "generator")
+  inputs: NodePort[];          // Array of input ports
+  outputs: NodePort[];         // Array of output ports
+  parameters: NodeParameter[]; // Array of editable parameters
+}
+
+// What does the entire JSON file look like?
+export interface NodeDefinitionsFile {
+  version: string;                  // File version (e.g., "1.0")
+  description: string;              // Description of file
+  nodeTypes: NodeDefinition[];      // Array of all node definitions
+}

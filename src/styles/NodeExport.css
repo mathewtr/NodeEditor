@@ -1,0 +1,71 @@
+/* ══════════════════════════════════════
+   Action Buttons — Navbar Style
+   ══════════════════════════════════════ */
+
+.graph-action-button {
+  color: var(--text-primary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.graph-action-button:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-default);
+}
+
+.save-button {
+  color: var(--accent-green);
+}
+
+.save-button:hover {
+  background: var(--accent-green-soft);
+}
+
+/* ── Export Filename Prompt ── */
+.export-filename-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-surface);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 3px 4px 3px 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.export-filename-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  width: 100px;
+  font-family: inherit;
+}
+
+.export-filename-input::placeholder {
+  color: var(--text-muted);
+}
+
+.export-filename-suffix {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-right: 4px;
+}
+
+.export-confirm-button {
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  border-color: var(--accent-primary);
+}
+
+.export-cancel-button {
+  padding: 3px 8px;
+  font-size: 0.75rem;
+}
