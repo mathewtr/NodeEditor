@@ -1,71 +1,81 @@
-/* ══════════════════════════════════════
-   Action Buttons — Navbar Style
-   ══════════════════════════════════════ */
+.floating-actions-container {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
 
 .graph-action-button {
-  color: var(--text-primary);
-  background: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
+  color: #f5f5f7;
+  background: rgba(44, 44, 46, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px 18px;
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--transition-fast), border-color var(--transition-fast);
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .graph-action-button:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-default);
+  background: rgba(58, 58, 60, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .save-button {
-  color: var(--accent-green);
+  border-color: rgba(52, 199, 89, 0.4);
+  color: #30d158;
 }
 
 .save-button:hover {
-  background: var(--accent-green-soft);
+  background: rgba(52, 199, 89, 0.15);
+  border-color: rgba(52, 199, 89, 0.6);
 }
 
-/* ── Export Filename Prompt ── */
+/* Export filename prompt */
 .export-filename-container {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--bg-surface);
-  border: 1px solid var(--accent-primary);
-  border-radius: var(--radius-sm);
-  padding: 3px 4px 3px 10px;
-  box-shadow: var(--shadow-sm);
+  background: rgba(44, 44, 46, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 4px 6px 4px 14px;
 }
 
 .export-filename-input {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--text-primary);
+  color: #f5f5f7;
   font-size: 0.8rem;
   width: 100px;
   font-family: inherit;
 }
 
 .export-filename-input::placeholder {
-  color: var(--text-muted);
+  color: #636366;
 }
 
 .export-filename-suffix {
-  color: var(--text-muted);
+  color: #636366;
   font-size: 0.8rem;
   margin-right: 4px;
 }
 
 .export-confirm-button {
-  padding: 3px 10px;
+  padding: 4px 12px;
   font-size: 0.75rem;
-  border-color: var(--accent-primary);
 }
 
 .export-cancel-button {
-  padding: 3px 8px;
+  padding: 4px 10px;
   font-size: 0.75rem;
 }
