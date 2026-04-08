@@ -108,8 +108,11 @@ function App() {
       data[param.name] = param.default;
     });
 
+    const nodeId = `node-${Date.now()}`;
+    data.highlightClass = 'node-just-added';
+
     const newNode: Node = {
-      id: `node-${Date.now()}`,
+      id: nodeId,
       type: nodeTypeId,
       position: {
         x: Math.random() * 400 + 100,
@@ -119,7 +122,38 @@ function App() {
     };
 
     setNodes((nds) => [...nds, newNode]);
-  }, [definitions, setNodes, handleNodeDataChange]);
+
+    // Auto-pan viewport to center on the newly created node
+    setTimeout(() => {
+      reactFlowInstance.setCenter(
+        newNode.position.x + 75,
+        newNode.position.y + 50,
+        { zoom: reactFlowInstance.getZoom(), duration: 300 }
+      );
+    }, 50);
+
+    // Fade out the highlight after a short delay
+    setTimeout(() => {
+      setNodes((nds) =>
+        nds.map((n) =>
+          n.id === nodeId
+            ? { ...n, data: { ...n.data, highlightClass: 'node-just-added-fade' } }
+            : n
+        )
+      );
+    }, 600);
+
+    // Remove the class entirely after the fade completes
+    setTimeout(() => {
+      setNodes((nds) =>
+        nds.map((n) =>
+          n.id === nodeId
+            ? { ...n, data: { ...n.data, highlightClass: undefined } }
+            : n
+        )
+      );
+    }, 2100);
+  }, [definitions, setNodes, handleNodeDataChange, reactFlowInstance]);
 
   const handleImportGraph = useCallback((
     importedNodes: Node[],

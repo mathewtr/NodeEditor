@@ -97,9 +97,11 @@ export function Inspector({ selectedNode, onClose, onUpdateParameter }: Inspecto
     const getEditableParameters = () => {
         if (!selectedNode.data) return [];
 
-        return Object.entries(selectedNode.data).filter(([key]) =>
+        return Object.entries(selectedNode.data).filter(([key, val]) =>
             key !== 'label' &&
-            key !== 'onChange'
+            key !== 'onChange' &&
+            key !== 'highlightClass' &&
+            val !== undefined
         );
     };
 

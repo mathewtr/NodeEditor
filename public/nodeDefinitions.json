@@ -53,7 +53,9 @@
       "id": "random_range",
       "title": "Random Range",
       "type": "generator",
-      "inputs": [],
+      "inputs": [
+        { "id": "min", "type": "float" },
+        { "id": "max", "type": "float" }],
       "outputs": [
         { "id": "output", "type": "float" }
       ],
@@ -65,14 +67,17 @@
     {
       "id": "sine_wave",
       "title": "Sine Wave",
-      "type": "generator",
+      "type": "processing",
       "inputs": [
-        { "id": "input", "type": "float" }
+        { "id": "time", "type": "float" },
+        { "id": "frequency", "type": "float" },
+        { "id": "amount", "type": "float" }
       ],
       "outputs": [
         { "id": "output", "type": "float" }
       ],
       "parameters": [
+        { "name": "time", "type": "float", "default": 0 },
         { "name": "frequency", "type": "float", "default": 4 },
         { "name": "amount", "type": "float", "default": 2 }
       ]
