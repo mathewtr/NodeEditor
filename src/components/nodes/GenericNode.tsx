@@ -28,7 +28,7 @@ export function GenericNode({ id, data, type }: NodeProps) {
   const outputCount = definition.outputs.length;
 
   return (
-    <div className="node">
+    <div className={`node ${data.highlightClass ?? ''}`}>
       {/* Standalone input handles (no matching parameter) */}
       {standaloneInputs.map((input) => (
         <Handle
@@ -68,27 +68,31 @@ export function GenericNode({ id, data, type }: NodeProps) {
       )}
 
       {/* Output handles */}
-      {definition.outputs.map((output, i) => (
-        <div key={output.id} className="node-output-row">
+      {outputCount > 1 ? (
+        <div className="node-outputs">
+          {definition.outputs.map((output) => (
+            <div key={output.id} className="node-output-row-multi">
+              <span className="node-output-label">{output.id.toUpperCase()}</span>
+              <Handle
+                type="source"
+                position={Position.Right}
+                id={output.id}
+                className="node-handle"
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        definition.outputs.map((output) => (
           <Handle
+            key={output.id}
             type="source"
             position={Position.Right}
             id={output.id}
             className="node-handle"
-            style={
-              outputCount > 1
-                ? {
-                    top: `${((i + 1) / (outputCount + 1)) * 100}%`,
-                    transform: 'translateY(-50%)',
-                  }
-                : undefined
-            }
           />
-          {outputCount > 1 && (
-            <span className="node-output-label">{output.id.toUpperCase()}</span>
-          )}
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 }

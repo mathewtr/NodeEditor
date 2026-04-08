@@ -134,6 +134,16 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
+.node.node-just-added {
+  box-shadow: 0 0 0 2px #5ce0d6, 0 0 24px rgba(92, 224, 214, 0.4);
+  transition: box-shadow 1.5s ease;
+}
+
+.node.node-just-added-fade {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  transition: box-shadow 1.5s ease;
+}
+
 .node-header {
   display: flex;
   align-items: center;
@@ -279,12 +289,23 @@
   text-align: center;
 }
 
-/* ── Multi-output handle rows ── */
-.node-output-row {
+/* ── Multi-output section ── */
+.node-outputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.node-output-row-multi {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
+  padding-right: 0.25rem;
+  min-height: 1.2rem;
 }
 
 .node-output-label {
