@@ -1,9 +1,16 @@
 import { useRef, useState } from 'react';
+import type { MutableRefObject } from 'react';
 import type { Node, Edge, ReactFlowInstance } from 'reactflow';
 import '../styles/NodeExport.css';
 
 interface SaveGraphProps {
   reactFlowInstance: ReactFlowInstance<Node, Edge>;
+  /**
+   * Optional external ref for the save file handle. Lifting this up to the
+   * parent lets other actions (e.g. "New Canvas") reset it so the next Save
+   * re-prompts for a file location.
+   */
+  fileHandleRef?: MutableRefObject<FileSystemFileHandle | null>;
 }
 
 function getCleanGraph(reactFlowInstance: ReactFlowInstance) {
@@ -17,8 +24,12 @@ function getCleanGraph(reactFlowInstance: ReactFlowInstance) {
   return JSON.stringify({ nodes: cleanNodes, edges }, null, 2);
 }
 
-export function SaveGraphButton({ reactFlowInstance }: SaveGraphProps) {
-  const fileHandleRef = useRef<FileSystemFileHandle | null>(null);
+export function SaveGraphButton({ reactFlowInstance, fileHandleRef: externalRef }: SaveGraphProps) {
+  const internalRef = useRef<FileSystemFileHandle | null>(null);
+  // Prefer the parent-provided ref if one was passed; otherwise fall back to
+  // our own. This lets App.tsx reset the handle (e.g. from "New Canvas")
+  // without SaveGraphButton having to re-render to pick up a new value.
+  const fileHandleRef = externalRef ?? internalRef;
   const [status, setStatus] = useState<'idle' | 'saved'>('idle');
 
   const handleSave = async () => {
