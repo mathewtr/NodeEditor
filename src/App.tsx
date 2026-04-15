@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import ReactFlow, {
   type Node,
   type Edge,
@@ -18,6 +18,7 @@ import { NodeDefinitionsContext } from './contexts/NodeDefinitionsContext';
 import { NodeCatalog } from './components/NodeCatalog';
 import { ExportGraphButton } from './components/NodeExport';
 import { ImportGraphButton } from './components/NodeImport';
+import { NewGraphButton } from './components/NodeNew';
 import { SaveGraphButton } from './components/NodeSave';
 import { GenericNode } from './components/nodes/GenericNode';
 import { Inspector } from './components/Inspector';
@@ -28,6 +29,9 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const reactFlowInstance = useReactFlow();
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  // Shared file handle for Save — lifted here so "New" can reset it,
+  // matching the Word "New → Save prompts again" behavior.
+  const saveFileHandleRef = useRef<FileSystemFileHandle | null>(null);
 
   // Build nodeTypes map dynamically from definitions — every type uses GenericNode
   const nodeTypes = useMemo(() => {
@@ -172,6 +176,15 @@ function App() {
     setSelectedNode(null);
   }, [setNodes, setEdges, handleNodeDataChange]);
 
+  const handleNewGraph = useCallback(() => {
+    setNodes([]);
+    setEdges([]);
+    setSelectedNode(null);
+    // Forget the previously-picked save location so the next Save opens the
+    // file picker again (fresh canvas = fresh file).
+    saveFileHandleRef.current = null;
+  }, [setNodes, setEdges]);
+
   if (loading) {
     return <div>Loading node definitions...</div>;
   }
@@ -187,8 +200,9 @@ function App() {
         <nav className="top-navbar">
           <span className="navbar-title">FloatNodes</span>
           <div className="navbar-actions">
+            <NewGraphButton hasContent={nodes.length > 0 || edges.length > 0} onNew={handleNewGraph} />
             <ImportGraphButton onImport={handleImportGraph} />
-            <SaveGraphButton reactFlowInstance={reactFlowInstance} />
+            <SaveGraphButton reactFlowInstance={reactFlowInstance} fileHandleRef={saveFileHandleRef} />
             <ExportGraphButton reactFlowInstance={reactFlowInstance} />
           </div>
         </nav>
