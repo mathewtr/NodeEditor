@@ -15,16 +15,26 @@ interface FileSystemFileHandle {
   kind: 'file';
   name: string;
   createWritable(): Promise<FileSystemWritableFileStream>;
+  getFile(): Promise<File>;
+}
+
+interface FilePickerAcceptType {
+  description?: string;
+  accept: Record<string, string[]>;
 }
 
 interface SaveFilePickerOptions {
   suggestedName?: string;
-  types?: Array<{
-    description?: string;
-    accept: Record<string, string[]>;
-  }>;
+  types?: FilePickerAcceptType[];
+}
+
+interface OpenFilePickerOptions {
+  multiple?: boolean;
+  excludeAcceptAllOption?: boolean;
+  types?: FilePickerAcceptType[];
 }
 
 interface Window {
   showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle>;
+  showOpenFilePicker(options?: OpenFilePickerOptions): Promise<FileSystemFileHandle[]>;
 }

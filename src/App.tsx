@@ -16,8 +16,8 @@ import './styles/App.css';
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeDefinitionsContext } from './contexts/NodeDefinitionsContext';
 import { NodeCatalog } from './components/NodeCatalog';
-import { ImportGraphButton } from './components/NodeImport';
 import { NewGraphButton } from './components/NodeNew';
+import { OpenGraphButton } from './components/NodeOpen';
 import { SaveGraphButton } from './components/NodeSave';
 import { SaveAsGraphButton } from './components/NodeSaveAs';
 import { GenericNode } from './components/nodes/GenericNode';
@@ -166,11 +166,11 @@ function App() {
     }, 2100);
   }, [definitions, setNodes, handleNodeDataChange, reactFlowInstance]);
 
-  const handleImportGraph = useCallback((
-    importedNodes: Node[],
-    importedEdges: Edge[]
+  const handleOpenGraph = useCallback((
+    openedNodes: Node[],
+    openedEdges: Edge[]
   ) => {
-    const nodesWithCallbacks = importedNodes.map((node) => ({
+    const nodesWithCallbacks = openedNodes.map((node) => ({
       ...node,
       data: {
         ...node.data,
@@ -179,7 +179,7 @@ function App() {
     }));
 
     setNodes(nodesWithCallbacks);
-    setEdges(importedEdges);
+    setEdges(openedEdges);
     setSelectedNode(null);
   }, [setNodes, setEdges, handleNodeDataChange]);
 
@@ -208,7 +208,7 @@ function App() {
           <span className="navbar-title">FloatNodes</span>
           <div className="navbar-actions">
             <NewGraphButton hasContent={nodes.length > 0 || edges.length > 0} onNew={handleNewGraph} />
-            <ImportGraphButton onImport={handleImportGraph} />
+            <OpenGraphButton onOpen={handleOpenGraph} fileHandleRef={saveFileHandleRef} />
             <SaveGraphButton reactFlowInstance={reactFlowInstance} fileHandleRef={saveFileHandleRef} />
             <SaveAsGraphButton reactFlowInstance={reactFlowInstance} fileHandleRef={saveFileHandleRef} />
           </div>
