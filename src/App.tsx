@@ -16,10 +16,10 @@ import './styles/App.css';
 import { useNodeDefinitions, getNodeDefinition } from './hooks/useNodeDefinitions';
 import { NodeDefinitionsContext } from './contexts/NodeDefinitionsContext';
 import { NodeCatalog } from './components/NodeCatalog';
-import { ExportGraphButton } from './components/NodeExport';
 import { ImportGraphButton } from './components/NodeImport';
 import { NewGraphButton } from './components/NodeNew';
 import { SaveGraphButton } from './components/NodeSave';
+import { SaveAsGraphButton } from './components/NodeSaveAs';
 import { GenericNode } from './components/nodes/GenericNode';
 import { Inspector } from './components/Inspector';
 
@@ -203,7 +203,7 @@ function App() {
             <NewGraphButton hasContent={nodes.length > 0 || edges.length > 0} onNew={handleNewGraph} />
             <ImportGraphButton onImport={handleImportGraph} />
             <SaveGraphButton reactFlowInstance={reactFlowInstance} fileHandleRef={saveFileHandleRef} />
-            <ExportGraphButton reactFlowInstance={reactFlowInstance} />
+            <SaveAsGraphButton reactFlowInstance={reactFlowInstance} fileHandleRef={saveFileHandleRef} />
           </div>
         </nav>
 
