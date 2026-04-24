@@ -44,7 +44,14 @@ function App() {
   }, [definitions]);
 
   const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    (params: Connection) =>
+      setEdges((eds) => {
+        const filtered = eds.filter(
+          (e) =>
+            !(e.target === params.target && e.targetHandle === params.targetHandle)
+        );
+        return addEdge(params, filtered);
+      }),
     [setEdges]
   );
 
