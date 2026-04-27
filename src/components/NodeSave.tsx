@@ -42,7 +42,7 @@ export function SaveGraphButton({ reactFlowInstance, fileHandleRef: externalRef 
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'mode.json';
+      link.download = 'NodeGraph_{Mode}.json';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -54,7 +54,7 @@ export function SaveGraphButton({ reactFlowInstance, fileHandleRef: externalRef 
       // First save: open file picker. Subsequent saves: reuse handle.
       if (!fileHandleRef.current) {
         fileHandleRef.current = await window.showSaveFilePicker({
-          suggestedName: 'mode.json',
+          suggestedName: 'NodeGraph_{Mode}.json',
           types: [
             {
               description: 'JSON Files',

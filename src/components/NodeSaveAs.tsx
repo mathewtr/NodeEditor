@@ -30,7 +30,7 @@ export function SaveAsGraphButton({ reactFlowInstance, fileHandleRef }: SaveAsGr
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'mode.json';
+      link.download = 'NodeGraph_{Mode}.json';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -40,7 +40,7 @@ export function SaveAsGraphButton({ reactFlowInstance, fileHandleRef }: SaveAsGr
 
     try {
       const handle = await window.showSaveFilePicker({
-        suggestedName: fileHandleRef.current?.name ?? 'mode.json',
+        suggestedName: fileHandleRef.current?.name ?? 'NodeGraph_{Mode}.json',
         types: [
           {
             description: 'JSON Files',
