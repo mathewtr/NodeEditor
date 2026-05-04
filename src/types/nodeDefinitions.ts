@@ -10,8 +10,8 @@ export interface NodePort {
 // What does an editable parameter look like?
 export interface NodeParameter {
   name: string;                              // (e.g. "frequency")
-  type: 'float' | 'int' | 'vector4' | 'string';
-  default: number | number[] | string;       // number for float/int, number[] for vector4, string for string
+  type: 'float' | 'int' | 'vector4' | 'string' | 'color';
+  default: number | number[] | string;       // number for float/int, number[] for vector4/color (RGBA), string for string
 }
 
 // What does a complete node type definition look like?

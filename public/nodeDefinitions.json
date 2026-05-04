@@ -175,6 +175,34 @@
       ]
     },
     {
+      "id": "color_picker",
+      "title": "Color",
+      "type": "parameter",
+      "inputs": [],
+      "outputs": [
+        { "id": "output", "type": "vector4" }
+      ],
+      "parameters": [
+        { "name": "color", "type": "color", "default": [1, 1, 1, 1] }
+      ]
+    },
+    {
+      "id": "hue_shift",
+      "title": "Hue Shift",
+      "type": "processing",
+      "inputs": [
+        { "id": "color", "type": "vector4" },
+        { "id": "hue", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "vector4" }
+      ],
+      "parameters": [
+        { "name": "color", "type": "color", "default": [1, 0, 0, 1] },
+        { "name": "hue", "type": "float", "default": 0 }
+      ]
+    },
+    {
       "id": "split",
       "title": "Split",
       "type": "utility",

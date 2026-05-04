@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Node } from "reactflow";
+import { useNodeDefinitionsContext } from "../contexts/NodeDefinitionsContext";
 import "../styles/Inspector.css";
 
 interface InspectorProps {
@@ -12,13 +13,52 @@ interface ParameterInputProps {
     name: string;
     value: number | number[] | string;
     nodeId: string;
+    paramType?: 'float' | 'int' | 'vector4' | 'string' | 'color';
     onUpdate: (nodeId: string, paramName: string, value: number | number[] | string) => void;
 }
 
+// Color helpers — kept in sync with NodeField.tsx so the swatch UI behaves identically
+// in both places (node body and inspector panel).
+function clamp01(v: number) {
+    return Math.max(0, Math.min(1, v));
+}
+function rgbaToHex(rgba: number[]): string {
+    const toHex = (v: number) =>
+        Math.round(clamp01(v) * 255).toString(16).padStart(2, '0');
+    return `#${toHex(rgba[0] ?? 0)}${toHex(rgba[1] ?? 0)}${toHex(rgba[2] ?? 0)}`;
+}
+function hexToRgba(hex: string, alpha: number): number[] {
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+    return [r, g, b, alpha];
+}
+
 // Component for individual parameter input
-function ParameterInput({ name, value, nodeId, onUpdate }: ParameterInputProps) {
+function ParameterInput({ name, value, nodeId, paramType, onUpdate }: ParameterInputProps) {
     const [localValue, setLocalValue] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+
+    const isColor = paramType === 'color' && Array.isArray(value);
+
+    // Color params get a native color swatch — the array is too long to read as text
+    // and the swatch is the same control the node body uses, so editing is consistent.
+    if (isColor) {
+        return (
+            <div className="param-input-row">
+                <label className="param-label">{name}</label>
+                <input
+                    type="color"
+                    value={rgbaToHex(value as number[])}
+                    onChange={(e) => {
+                        const alpha = (value as number[])[3] ?? 1;
+                        onUpdate(nodeId, name, hexToRgba(e.target.value, alpha));
+                    }}
+                    className="param-input color-swatch"
+                />
+            </div>
+        );
+    }
 
     // Show the prop value when not editing, local value when editing
     const displayValue = isEditing
@@ -90,8 +130,18 @@ function ParameterInput({ name, value, nodeId, onUpdate }: ParameterInputProps) 
 }
 
 export function Inspector({ selectedNode, onClose, onUpdateParameter }: InspectorProps) {
+    const definitions = useNodeDefinitionsContext();
+
     // Don't render if no node selected
     if (!selectedNode) return null;
+
+    // Look up the node's definition so we can pass each parameter's declared type
+    // (e.g. "color") down to ParameterInput. Without this, the inspector falls
+    // back to a plain text field for every parameter.
+    const nodeDefinition = definitions?.nodeTypes.find((n) => n.id === selectedNode.type);
+
+    const getParamType = (paramName: string) =>
+        nodeDefinition?.parameters.find((p) => p.name === paramName)?.type;
 
     // Get all editable parameters
     const getEditableParameters = () => {
@@ -141,6 +191,7 @@ export function Inspector({ selectedNode, onClose, onUpdateParameter }: Inspecto
                                     name={key}
                                     value={value as number | number[] | string}
                                     nodeId={selectedNode.id}
+                                    paramType={getParamType(key)}
                                     onUpdate={onUpdateParameter}
                                 />
                             ))}
