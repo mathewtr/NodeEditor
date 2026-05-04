@@ -55,6 +55,7 @@ export function GenericNode({ id, data, type }: NodeProps) {
               value={data[param.name] as number | number[] | string}
               nodeId={id}
               fieldName={param.name}
+              paramType={param.type}
               handleId={param.hasHandle ? param.name : undefined}
               onChange={data.onChange}
               placeholder={
