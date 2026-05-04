@@ -18,7 +18,26 @@
 .nodecatalog-list {
   display: flex;
   flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Group of nodes under a category header. Cards inside still get the same
+   small gap; the larger gap above sits between groups, not between cards. */
+.nodecatalog-group {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
+}
+
+.nodecatalog-group-header {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 0 0.25rem 0.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.2rem;
 }
 
 /* Card Button */
