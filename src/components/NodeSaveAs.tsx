@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { MutableRefObject } from 'react';
 import type { Node, Edge, ReactFlowInstance } from 'reactflow';
+import { serializeGraph } from '../utilities/serializeGraph';
 import '../styles/NodeExport.css';
 
 interface SaveAsGraphProps {
@@ -10,13 +11,7 @@ interface SaveAsGraphProps {
 
 function getCleanGraph(reactFlowInstance: ReactFlowInstance) {
   const { nodes, edges } = reactFlowInstance.toObject();
-  const cleanNodes = nodes.map((node) => ({
-    ...node,
-    data: Object.fromEntries(
-      Object.entries(node.data).filter(([, v]) => typeof v !== 'function')
-    ),
-  }));
-  return JSON.stringify({ nodes: cleanNodes, edges }, null, 2);
+  return serializeGraph(nodes, edges);
 }
 
 export function SaveAsGraphButton({ reactFlowInstance, fileHandleRef }: SaveAsGraphProps) {
