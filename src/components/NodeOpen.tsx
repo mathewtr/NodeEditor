@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import type { MutableRefObject } from 'react';
 import type { Node, Edge } from 'reactflow';
+import { deserializeGraph } from '../utilities/serializeGraph';
 import '../styles/NodeExport.css';
 
 interface NodeOpenProps {
@@ -8,15 +9,7 @@ interface NodeOpenProps {
   fileHandleRef: MutableRefObject<FileSystemFileHandle | null>;
 }
 
-function parseGraph(text: string): { nodes: Node[]; edges: Edge[] } | null {
-  try {
-    const json = JSON.parse(text);
-    if (!Array.isArray(json.nodes) || !Array.isArray(json.edges)) return null;
-    return { nodes: json.nodes, edges: json.edges };
-  } catch {
-    return null;
-  }
-}
+const parseGraph = deserializeGraph;
 
 export function OpenGraphButton({ onOpen, fileHandleRef }: NodeOpenProps) {
   const fallbackInputRef = useRef<HTMLInputElement>(null);
