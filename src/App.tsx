@@ -369,8 +369,8 @@ function App() {
     }));
 
     pushHistory();
-    setNodes((curr) => curr.map((n) => ({ ...n, selected: false })).concat(newNodes));
-    setEdges((curr) => curr.map((e) => ({ ...e, selected: false })).concat(newEdges));
+    setNodes((curr) => [...curr.map((n) => ({ ...n, selected: false })), ...newNodes]);
+    setEdges((curr) => [...curr.map((e) => ({ ...e, selected: false })), ...newEdges]);
   }, [reactFlowInstance, viewportCenter, handleNodeDataChange, pushHistory, setNodes, setEdges]);
 
   // ── Keyboard shortcuts ─────────────────────────────────────────────
