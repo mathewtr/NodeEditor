@@ -83,6 +83,24 @@
       ]
     },
     {
+      "id": "noise",
+      "title": "Noise",
+      "type": "processing",
+      "inputs": [
+        { "id": "frequency1", "type": "float" },
+        { "id": "frequency2", "type": "float" },
+        { "id": "amount", "type": "float" }
+      ],
+      "outputs": [
+        { "id": "output", "type": "float" }
+      ],
+      "parameters": [
+        { "name": "frequency1", "type": "float", "default": 0.7 },
+        { "name": "frequency2", "type": "float", "default": 0.13 },
+        { "name": "amount", "type": "float", "default": 1 }
+      ]
+    },
+    {
       "id": "add",
       "title": "Add",
       "type": "processing",
